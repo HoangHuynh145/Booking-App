@@ -1,6 +1,6 @@
-# Bài tập kê đơn thuốc
+# Bài tập cuối kỳ môn lập trình web
 
-Github repo cho bài tập kê đơn thuốc.
+Github repo cho bài tập cuối kỳ môn lập trình web.
 ### Sau khi clone về làm những bước sau:
 1, Chạy lên **npm install (npm i)**
 
