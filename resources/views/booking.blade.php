@@ -148,13 +148,13 @@
                 <h3 class="text-4xl font-semibold mb-12">Add a new Card</h3>
 
                 <div class="space-y-7">
-                    <x-input-primary value="Card Number" />
+                    <x-input-primary title="Card Number" />
                     <div class="flex gap-7">
-                        <x-input-primary value="Card Number" />
-                        <x-input-primary value="Card Number" />
+                        <x-input-primary title="Card Number" />
+                        <x-input-primary title="Card Number" />
                     </div>
-                    <x-input-primary value="Card Number" />
-                    <x-input-primary value="Card Number" />
+                    <x-input-primary title="Card Number" />
+                    <x-input-primary title="Card Number" />
                 </div>
 
                 <button class="w-full h-12 py-3.5 bg-mint-green rounded-lg leading-none">

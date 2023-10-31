@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,6 +28,10 @@ Route::get('/booking/{id}', function () {
 
 Route::get('/place/{id}', function () {
     return view('hotel-detail');
+});
+
+Route::group(['prefix' => 'management'], function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';

@@ -4,16 +4,16 @@
             <div class="bg-white rounded-2xl py-8 px-5 shadow-black/10 shadow-lg flex items-center gap-3">
                 <ul class="grid grid-cols-4 gap-3 flex-1">
                     <li class="col-span-1">
-                        <x-input-primary iconLink="assets/icons/bed-fill.svg" position="left" value="Isanbul, Turkey" />
+                        <x-input-primary iconLink="assets/icons/bed-fill.svg" position="left" title="Isanbul, Turkey" />
                     </li>
                     <li class="col-span-1">
-                        <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" value="Isanbul, Turkey" />
+                        <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" title="Isanbul, Turkey" />
                     </li>
                     <li class="col-span-1">
-                        <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" value="Isanbul, Turkey" />
+                        <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" title="Isanbul, Turkey" />
                     </li>
                     <li class="col-span-1">
-                        <x-input-primary iconLink="assets/icons/user.svg" position="left" value="Isanbul, Turkey" />
+                        <x-input-primary iconLink="assets/icons/user.svg" position="left" title="Isanbul, Turkey" />
                     </li>
                 </ul>
                 <button class="bg-mint-green rounded-lg h-14 w-14 flex-center">

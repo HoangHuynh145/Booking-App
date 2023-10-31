@@ -19,12 +19,27 @@
                     </div>
                     <h1 class="text-6xl font-semibold font-epilogue mt-14 mb-2">Login</h1>
                     <span class="text-base text-gray-700">Login to access your Golobe account</span>
-                    <form action="#" class="mt-12">
+                    <form action="{{ route('login') }}" method="POST" class="mt-12">
+                        @csrf
                         <div class=" space-y-6">
-                            <x-input-primary value="Card Number" />
-                            <x-input-primary value="Card Number" />
-                            <p class="text-right text-salmon text-sm font-medium">Forgot Password</p>
+                            <x-input-primary 
+                                title="Email Or Name" 
+                                name="username"  
+                                error="{{Session::has('error') ? true : false}}"
+                            />
+                            <x-input-primary 
+                                title="Password" 
+                                type="password" 
+                                name="password" 
+                                error="{{Session::has('error') ? true : false}}"
+                            />
+                            <!-- <p class="text-right text-salmon text-sm font-medium">Forgot Password</p> -->
                         </div>
+                        @if(Session::has('error'))
+                            <div class="py-3 px-4 bg-red-500/20 rounded-lg mt-3">
+                                <strong class="text-red-600">{{ Session::get('error') }}</strong>
+                            </div>
+                        @endif
                         <div class="my-8">
                             <button type="submit" class="w-full mb-4 h-12 py-3.5 bg-mint-green rounded-lg leading-none">Login</button>
                             <p class="flex justify-center">Don’t have an account? 

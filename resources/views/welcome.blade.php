@@ -16,16 +16,16 @@
         <form action="" class="pt-2.5 pb-5 px-4">
             <ul class="grid grid-cols-4 gap-3">
                 <li class="col-span-1">
-                    <x-input-primary iconLink="assets/icons/bed-fill.svg" position="left" value="Isanbul, Turkey" />
+                    <x-input-primary iconLink="assets/icons/bed-fill.svg" position="left" title="Isanbul, Turkey" />
                 </li>
                 <li class="col-span-1">
-                    <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" value="Isanbul, Turkey" />
+                    <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" title="Isanbul, Turkey" />
                 </li>
                 <li class="col-span-1">
-                    <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" value="Isanbul, Turkey" />
+                    <x-input-primary iconLink="assets/icons/stack-money.svg" position="right" title="Isanbul, Turkey" />
                 </li>
                 <li class="col-span-1">
-                    <x-input-primary iconLink="assets/icons/user.svg" position="left" value="Isanbul, Turkey" />
+                    <x-input-primary iconLink="assets/icons/user.svg" position="left" title="Isanbul, Turkey" />
                 </li>
             </ul>
             <div class="flex justify-end">

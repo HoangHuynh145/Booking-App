@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthenticationController;
+use App\Http\Controllers\Auth\RegisterUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,13 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('auth')->group(function () {
-    Route::get('/login', function () {
-        return view("auth.login");
-    })->name('login');
-
-    Route::get('/register', function () {
-        return view("auth.register");
-    })->name('register');
+Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
+    Route::get('/login', [AuthenticationController::class, 'create'])->name('login');
+    Route::post('/login', [AuthenticationController::class, 'store'])->name('login');
+    Route::get('/register', [RegisterUserController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterUserController::class, 'store'])->name('register');
 });
 
+Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
+    Route::get('logout', [AuthenticationController::class, 'destroy'])->name('logout');
+});

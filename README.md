@@ -16,4 +16,3 @@ Github repo cho bài tập cuối kỳ môn lập trình web.
 2, Chạy lệnh **npm run dev**
 
 3, Chạy lệnh **php artisan serve**
-
