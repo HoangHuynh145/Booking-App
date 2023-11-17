@@ -1,6 +1,13 @@
 <?php
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HotelsController;
+use App\Http\Controllers\Admin\OrdersController;
+use App\Http\Controllers\Client\BookingController;
+use App\Http\Controllers\Client\DetailHotelController;
+use App\Http\Controllers\Client\ListBlocksController;
+use App\Http\Controllers\Client\TopPageController;
+use App\Http\Controllers\Client\ListHotelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,24 +21,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/hotel-listing', function () {
-    return view('hotel-listing');
-});
+Route::get('/', [TopPageController::class, 'index'])->name('home-page');
 
-Route::get('/booking/{id}', function () {
-    return view('booking');
-});
+Route::get('/hotel-listing', [ListHotelController::class, 'index'])->name('listHotel');
+Route::get('/place/{id}', [DetailHotelController::class, 'index'])->name('hotelsDetail');
+Route::post('/place/{id}/rating', [DetailHotelController::class, 'updateRating'])->name('rating');
+Route::get('/booking', [BookingController::class, 'index'])->name('booking');
+Route::post('/listBlocks', [ListBlocksController::class, 'index'])->name('listBlocks');
 
-Route::get('/place/{id}', function () {
-    return view('hotel-detail');
-});
+
 
 Route::group(['prefix' => 'management'], function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
 
 require __DIR__.'/auth.php';
+require __DIR__.'/admin.php';

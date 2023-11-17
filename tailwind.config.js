@@ -13,7 +13,7 @@ module.exports = {
       colors: {
         "mint-green": "#8DD3BB",
         "salmon": "#FF8682"
-      },
+      }
     },
   },
   plugins: [],

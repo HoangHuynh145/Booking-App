@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('blocks', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->boolean('deleteFlag')->default(false);
+            $table->string('description');
             $table->timestamps();
         });
     }

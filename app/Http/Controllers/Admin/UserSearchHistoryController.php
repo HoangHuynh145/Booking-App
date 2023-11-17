@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use App\Models\Blocks;
+use App\Models\UserSearchHistory;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreBlocksRequest;
-use App\Http\Requests\UpdateBlocksRequest;
+use App\Http\Requests\StoreUserSearchHistoryRequest;
+use App\Http\Requests\UpdateUserSearchHistoryRequest;
 
-class BlocksController extends Controller
+class UserSearchHistoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +28,7 @@ class BlocksController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreBlocksRequest $request)
+    public function store(StoreUserSearchHistoryRequest $request)
     {
         //
     }
@@ -36,7 +36,7 @@ class BlocksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Blocks $blocks)
+    public function show(UserSearchHistory $userSearchHistory)
     {
         //
     }
@@ -44,7 +44,7 @@ class BlocksController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Blocks $blocks)
+    public function edit(UserSearchHistory $userSearchHistory)
     {
         //
     }
@@ -52,7 +52,7 @@ class BlocksController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBlocksRequest $request, Blocks $blocks)
+    public function update(UpdateUserSearchHistoryRequest $request, UserSearchHistory $userSearchHistory)
     {
         //
     }
@@ -60,7 +60,7 @@ class BlocksController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Blocks $blocks)
+    public function destroy(UserSearchHistory $userSearchHistory)
     {
         //
     }

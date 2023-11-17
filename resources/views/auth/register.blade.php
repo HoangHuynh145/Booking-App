@@ -15,7 +15,9 @@
             <div class="max-h-fit flex items-center justify-center gap-20 w-full">
                 <div class="basis-3/6 flex justify-start">
                     <div class="h-[565px] w-[488px] overflow-hidden rounded-3xl">
-                        <img src="https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/394843947_354781037052518_4129313167905106614_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qMT7sKY16u8AX8uWmBU&_nc_ht=scontent.fdad1-4.fna&oh=00_AfDkN_u6JXpMrc0UcuXP4sGF1N2vynxzLOzHSODIcG2qzw&oe=653E7885" class="w-full h-full object-cover object-center">
+                        <a href="/">
+                            <img src="{{ asset('assets/imgs/auth_thumb.png') }}" class="w-full h-full object-cover object-center">
+                        </a>
                     </div>
                 </div>
 

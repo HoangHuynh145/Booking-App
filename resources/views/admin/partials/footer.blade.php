@@ -9,7 +9,7 @@
             document.write(new Date().getFullYear());
           </script>
           , made with <span class="text-danger"><i class="tf-icons mdi mdi-heart"></i></span> by
-          <a href="#" target="_blank" class="footer-link fw-medium">SenBac</a>
+          <a href="#" target="_blank" class="footer-link fw-medium">Nhóm 17</a>
         </div>
       </div>
     </div>

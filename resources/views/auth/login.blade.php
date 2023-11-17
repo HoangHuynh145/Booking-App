@@ -15,7 +15,9 @@
             <div class="max-h-fit flex items-center justify-center w-full">
                 <div class="basis-2/5">
                     <div class="flex justify-start">
-                        <img src="{{ asset('assets/imgs/Logo.png') }}" />
+                        <a href="/">
+                            <img src="{{ asset('assets/imgs/Logo.png') }}" />
+                        </a>
                     </div>
                     <h1 class="text-6xl font-semibold font-epilogue mt-14 mb-2">Login</h1>
                     <span class="text-base text-gray-700">Login to access your Golobe account</span>
@@ -51,7 +53,7 @@
 
                 <div class="basis-3/5 flex justify-end">
                     <div class="h-[565px] w-[488px] overflow-hidden rounded-3xl">
-                        <img src="https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/394843947_354781037052518_4129313167905106614_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=5f2048&_nc_ohc=qMT7sKY16u8AX8uWmBU&_nc_ht=scontent.fdad1-4.fna&oh=00_AfDkN_u6JXpMrc0UcuXP4sGF1N2vynxzLOzHSODIcG2qzw&oe=653E7885" class="w-full h-full object-cover object-center">
+                        <img src="{{ asset('assets/imgs/auth_thumb.png') }}">
                     </div>
                 </div>
             </div>

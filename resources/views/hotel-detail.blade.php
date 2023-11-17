@@ -1,136 +1,251 @@
+@php
+$user = session('user');
+@endphp
+
 <x-app-layout>
+    <a href="/" class="flex-center justify-start cursor-pointer mx-10 mt-4 gap-2">
+        <span><</span>
+        <span class="text-base">Home</span>
+    </a>
     <div class="container mx-auto pt-20 mb-16">
         <div class="flex justify-between items-end mb-8">
             <div>
                 <div class="flex items-center mb-4">
-                    <p class="text-xl font-medium mr-4">CVK Park Bosphorus Hotel Istanbul</p>
+                    <p class="text-xl font-medium mr-4">{{ $hotel->name }}</p>
                     <ul class="flex items-center font-poppins my-1.5">
-                        <li>
+                        @for ($i = 1; $i <= 5; $i++) <li class="{{ $hotel->level >= $i ? '' : 'invisible' }}">
                             <x-icons.star-fill color="#FF8682" />
-                        </li>
-                        <li>
-                            <x-icons.star-fill color="#FF8682" />
-                        </li>
-                        <li>
-                            <x-icons.star-fill color="#FF8682" />
-                        </li>
-                        <li>
-                            <x-icons.star-fill color="#FF8682" />
-                        </li>
-                        <li>
-                            <x-icons.star-fill color="#FF8682" />
-                        </li>
-                        <li class="leading-none mt-1 ml-1">
-                            5 star hotel
-                        </li>
+                            </li>
+                            @endfor
+                            <li class="leading-none mt-1 ml-1">
+                                {{ $hotel->level }} star hotel
+                            </li>
                     </ul>
                 </div>
-                <p class="flex text-sm"><x-icons.location /> Gümüssuyu Mah. Inönü Cad. No:8, Istanbul 34437</p>
+                <p class="flex text-sm"><x-icons.location /> {{ $hotel->location }}</p>
                 <div class="flex items-center mt-1.5 gap-1 font-poppins">
-                    <span class="rounded-lg border border-mint-green flex-center w-10 h-8 text-sm font-medium cursor-pointer">4.2</span>
-                    <p class="font-semibold">Very good</p>
+                    @if($hotel->stars > 0)
+                        <div class="flex items-center mt-3 gap-1 font-poppins" >
+                            <span class="rounded-lg border border-mint-green flex-center w-10 h-8 text-sm font-medium cursor-pointer">{{ $hotel->stars }}</span>
+                            <p class="font-semibold">
+                                @if($hotel->stars >= 1 && $hotel->stars < 2)
+                                    Awful
+                                @elseif($hotel->stars < 3)
+                                    Mediocre
+                                @elseif($hotel->stars < 4)
+                                    Good
+                                @elseif($hotel->stars <= 5)
+                                    Very Good
+                                @elseif($hotel->stars === 5)
+                                    Excellent
+                                @endif
+                            </p>
+                        </div>
+                    @endif
                 </div>
             </div>
             <div>
-                <h2 class="text-3xl mb-2 font-semibold text-salmon">$240/night</h2>
-                <div class="flex items-center justify-between gap-4">
-                    <span class="rounded-lg border border-mint-green flex-center w-20 h-12 text-sm font-medium cursor-pointer">
-                        <x-icons.heart-outline />
-                    </span>
-                    <button class="w-full h-12 bg-mint-green rounded-lg font-medium">
-                        Book now
-                    </button>
-                </div>
+                @auth
+                    <div class="flex items-center justify-between gap-4">
+                        @if(isset($wishListId))
+                            <form action="{{ route('wishlist.destroy', ['wishlist' => $wishListId]) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="rounded-lg border bg-mint-green flex-center w-20 h-12 text-sm font-medium cursor-pointer">
+                                    <x-icons.heart color="#fff" />
+                                </button>
+                                <input type="hidden" name="hotelId" value="{{ $hotel->id }}" />
+                            </form>
+                        @else
+                            <form action="{{ route('wishlist.store') }}" method="POST">
+                                @csrf
+                                <button type="submit" class="rounded-lg border border-mint-green flex-center w-20 h-12 text-sm font-medium cursor-pointer">
+                                    <x-icons.heart-outline />
+                                </button>
+                                <input type="hidden" name="hotelId" value="{{ $hotel->id }}" />
+                            </form>
+                        @endif
+                    </div>
+                @endauth
             </div>
         </div>
 
-        <ul class="grid grid-cols-4 grid-rows-2 h-[550px] gap-2 rounded-xl overflow-hidden">
-            <li class="col-span-2 row-span-2">
-                <img src="https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/338319009_771852291139606_1874185405731387449_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=5f2048&_nc_ohc=pnaYH0OmkfAAX_xaKsV&_nc_ht=scontent.fdad1-2.fna&oh=00_AfAIBqfH-qPCAvUjMsONwgeDabj5H_evPzwTTiUvpUYIKw&oe=6538CCC2" alt="" class="w-full h-full object-cover object-center">
+        <ul class="grid grid-cols-4 h-[550px] gap-2 rounded-xl overflow-hidden">
+            @foreach($rooms as $room)
+            <li class="first:col-span-2 first:row-span-2 col-auto row-auto overflow-hidden">
+                <img src="{{ asset($room->image) }}" alt="" class="w-full h-full object-cover object-center">
             </li>
-            <li class="cols-span-1 row-span-1">
-                <img src="https://scontent.fdad1-1.fna.fbcdn.net/v/t39.30808-6/337032488_514714110865365_2989907272659345963_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=5f2048&_nc_ohc=0xAtwU9PR3UAX_ll998&_nc_ht=scontent.fdad1-1.fna&oh=00_AfBhVvfEyvQ144Pno9t2Buxs3hi8mUiiK6avZ2nP0Ks3FA&oe=6539DEED" alt="" class="w-full h-full object-cover object-center">
-            </li>
-            <li class="col-span-1 row-span-1">
-                <img src="https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/338015625_153255844329409_430624692974133915_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Q9K3BslgwvQAX_LQNoh&_nc_ht=scontent.fdad1-4.fna&oh=00_AfB4pPuj6XgB1eI60P1O3OiouapTOBHUtdg4Qge9thLacg&oe=6539463A" alt="" class="w-full h-full object-cover object-center">
-            </li>
-            <li class="cols-span-1 row-span-1">
-                <img src="https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/338159170_589934363186243_9182418731546975643_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=Ae0JaNP_OoQAX89wq9n&_nc_ht=scontent.fdad2-1.fna&oh=00_AfC1_CQXsxPuEpbmG8JVQxfUNKcxcIaXEfX87lemu_9pJg&oe=653935DD" alt="" class="w-full h-full object-cover object-center">
-            </li>
-            <li class="col-span-1 row-span-1">
-                <img src="https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/337544453_543216137699532_1655306777910026595_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=5f2048&_nc_ohc=jJ_AipFBJesAX9fPgDd&_nc_oc=AQmEUST4wruNL_bKfywybd3Cwq50YzN_CRiP4jHeEAOBy61xhnXVFtbRFfaNVbg1YmYNhcyUyY6Usa8Rn-S6uuKN&_nc_ht=scontent.fdad1-4.fna&oh=00_AfCG-JqEOVp_hZ2Y6X0JHBbS4da8qg6OXBQBCQcoILQL2A&oe=6539D2CC" alt="" class="w-full h-full object-cover object-center">
-            </li>
+            @endforeach
         </ul>
 
-        <div class="mt-10 py-12 border-t border-slate-800">
+        <div class="mt-6 py-10 border-t border-slate-800">
             <h3 class="text-base font-medium">Overview</h3>
-            <p class="my-6">Located in Taksim Gmsuyu, the heart of Istanbul, the CVK Park Bosphorus Hotel Istanbul has risen from the ashes of the historic Park Hotel, which also served as Foreign Affairs Palace 120 years ago and is hosting its guests by assuming this hospitality mission. With its 452 luxurious rooms and suites, 8500 m2 SPA and fitness area, 18 meeting rooms including 4 dividable ones and 3 terraces with Bosphorus view, Istanbuls largest terrace with Bosphorus view (4500 m2) and latest technology infrastructure, CVK Park Bosphorus Hotel Istanbul is destined to be the popular attraction point of the city. Room and suite categories at various sizes with city and Bosphorus view, as well as 68 separate luxury suites, are offered to its special guests as a wide variety of selection.</p>
-            <ul class="flex items-center justify-start gap-4">
-                <li class="border border-mint-green rounded-lg bg-mint-green text-black font-epilogue p-4 pr-12">
-                    <h3 class="text-2xl font-semibold mb-8">4.2</h3>
-                    <span>Very good</span>
-                </li>
-                <li class="border border-mint-green rounded-lg text-black font-epilogue p-4 pr-12">
-                    <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
-                    <span>Near park</span>
-                </li>
-                <li class="border border-mint-green rounded-lg text-black font-epilogue p-4 pr-12">
-                    <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
-                    <span>Near nightlife</span>
-                </li>
-                <li class="border border-mint-green rounded-lg text-black font-epilogue p-4 pr-12">
-                    <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
-                    <span>Near theater</span>
-                </li>
-                <li class="border border-mint-green rounded-lg text-black font-epilogue p-4 pr-12">
-                    <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
-                    <span>Clean Hotel</span>
-                </li>
-            </ul>
-        </div>
-
-        <div class="mt-10 py-12 border-t border-slate-800">
-            <h3 class="text-base font-medium mb-8">Amenities</h3>
-            <div class="max-w-3xl">
-                <ul class="grid grid-cols-2 gap-y-6 gap-x-[300px]">
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.pool /></i>
-                        <span>Outdoor pool</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.fitness /></i>
-                        <span>Fitness center</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.pool /></i>
-                        <span>Indoor pool</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.bar /></i>
-                        <span>Bar/Lounge</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.spa /></i>
-                        <span>Spa and wellness center</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.wifi /></i>
-                        <span>Free Wi-Fi</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.restaurant /></i>
-                        <span>Restaurant</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.tea-cup size="24" /></i>
-                        <span>Tea/coffee machine</span>
-                    </li>
-                    <li class="col-span-1 flex items-center gap-2">
-                        <i><x-icons.room-service /></i>
-                        <span>Room service</span>
-                    </li>
-                </ul>
+            <p class="my-6">{{ $hotel->description }}</p>
+            <div class="border border-mint-green rounded-lg bg-mint-green text-black font-epilogue p-4 pr-10 max-w-fit min-w-[144px]">
+                <h3 class="text-2xl font-semibold mb-8">{{ $hotel->stars }}</h3>
+                <span>
+                    @if($hotel->stars == 0)
+                        Waiting for reviews
+                    @elseif($hotel->stars >= 1 && $hotel->stars < 2)
+                        Awful
+                    @elseif($hotel->stars < 3)
+                        Mediocre
+                    @elseif($hotel->stars < 4)
+                        Good
+                    @elseif($hotel->stars <= 5)
+                        Very Good
+                    @elseif($hotel->stars == 5)
+                        Excellent
+                    @endif
+                </span>
             </div>
         </div>
+
+        @auth()
+            @if(isset($acceptReview) && $acceptReview == true)
+                <div class=" py-10 border-t border-slate-800">
+                    <form action="{{ route('rating', ['id' => $hotel->id])}}" method="POST">
+                        @csrf
+                        <ul class="flex items-center justify-start gap-4">
+                            <li class="group-rating border {{ $ratingValue == 1 ? 'active' : '' }} border-mint-green rounded-lg text-black font-epilogue p-4 w-36 cursor-pointer hover:bg-mint-green" onclick="handleRating(event, 1)">
+                                <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
+                                <span>Awful</span>
+                                <input type="radio" name="rating" value="1" hidden id="rating1" {{ $ratingValue == 1 ? 'checked' : '' }} />
+                            </li>
+                            <li class="group-rating border {{ $ratingValue == 2 ? 'active' : '' }} border-mint-green rounded-lg text-black font-epilogue p-4 w-36 cursor-pointer hover:bg-mint-green" onclick="handleRating(event, 3)">
+                                <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
+                                <span>Mediocre</span>
+                                <input type="radio" name="rating" value="2" hidden id="rating2" {{ $ratingValue == 2 ? 'checked' : '' }} />
+                            </li>
+                            <li class="group-rating border {{ $ratingValue == 3 ? 'active' : '' }} border-mint-green rounded-lg text-black font-epilogue p-4 w-36 cursor-pointer hover:bg-mint-green" onclick="handleRating(event, 3)">
+                                <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
+                                <span>Good</span>
+                                <input type="radio" name="rating" value="3" hidden id="rating3" {{ $ratingValue == 3 ? 'checked' : '' }} />
+                            </li>
+                            <li class="group-rating border border-mint-green rounded-lg text-black font-epilogue p-4 w-36 cursor-pointer hover:bg-mint-green {{ $ratingValue == 4 ? 'active' : '' }}" onclick="handleRating(event, 4)">
+                                <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
+                                <span>Very Good</span>
+                                <input type="radio" name="rating" value="4" hidden id="rating4" {{ $ratingValue == 4 ? 'checked' : '' }} />
+                            </li>
+                            <li class="group-rating {{ $ratingValue == 5 ? 'active' : '' }} border border-mint-green rounded-lg text-black font-epilogue p-4 w-36 cursor-pointer hover:bg-mint-green" onclick="handleRating(event, 5)">
+                                <img src="{{asset('assets/icons/Stars.png')}}" alt="" class="mb-8">
+                                <span>Excellent</span>
+                                <input type="radio" name="rating" value="5" hidden id="rating5" {{ $ratingValue == 5 ? 'checked' : '' }} />
+                            </li>
+                        </ul>
+                        <div class="flex justify-between items-center mt-10">
+                            <div></div>
+                            <button type="submit" class="text-center font-medium border border-mint-green rounded-lg bg-mint-green text-black font-epilogue p-3.5 max-w-fit">
+                                Send your review
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            @endif
+        @endauth
+
+        <div class="py-10 border-t border-slate-800">
+            <h3 class="text-base font-medium mb-8">Available Rooms</h3>
+            <ul class="grid grid-cols-1 gap-x-[300px]">
+                <form action="{{ route('orders.create') }}" method="GET" id="formBooking" x-data="">
+                    @foreach($rooms as $room)
+                        <li class="col-span-1 flex items-center gap-4 border-b border-slate-700/30 py-4">
+                            <img src="{{ asset($room->image) }}" class="w-14 h-14 rounded-lg" />
+                            <p class="flex-1">{{$room->name}}</p>
+                            <span class="font-medium {{ $room->available === 0 ? 'line-through' : ''}}">
+                                {{ number_format($room->price / 1000, 3) }}đ/night
+                            </span>
+                            @if($room->available === 0)
+                                <p class="text-base text-red-500 font-semibold">Sold Out</p>
+                            @else
+                                <button type="button" class="w-36 h-12 bg-mint-green rounded-lg font-medium" @click="$dispatch('open-modal', 'add-time-info')" onclick="handleSetBookingInfo('{{ $room->id }}', '{{ $hotel->id }}')">
+                                    Book now
+                                </button>
+                            @endif
+                        </li>
+                    @endforeach
+                    <input type="text" name="typeRoomId" hidden />
+                    <input type="text" name="hotelId" id="bookingHotelId" hidden />
+                    <input type="datetime-local" name="checkin" hidden value="{{ $dateCheckin ?? '' }}" />
+                    <input type="datetime-local" name="checkout" hidden value="{{ $dateCheckout ?? '' }}" />
+                </form>
+            </ul>
+        </div>
     </div>
+
+    <x-modal name="add-time-info" :show="false" x-data="">
+        <div class="p-8">
+            <div class="text-2xl cursor-pointer text-right" @click="$dispatch('close-modal')">&times;</div>
+            @auth()
+                <div class="font-epilogue space-y-6">
+                    <h3 class="text-4xl font-semibold mb-12">Choose how long you stay with us</h3>
+
+                    <x-input-primary title="Check in" id="modal-checkin-input" type="datetime-local" value="{{ $dateCheckin ?? '' }}" />
+                    <x-input-primary title="Check out" id="modal-checkout-input" type="datetime-local" value="{{ $dateCheckout ?? '' }}" />
+
+                    <p id="message-error" class="text-red-500 font-medium hidden">Vui lòng kiểm tra lại thông tin ngày giờ Checkin/Checkout</p>
+
+                    <button class="w-full h-12 py-3.5 bg-mint-green rounded-lg leading-none" onclick="handleBooking()">
+                        Let's pay
+                    </button>
+                </div>
+            @endauth
+            @guest()
+                <div class="py-8 px-6 space-y-4">
+                    <p class="text-3xl font-semibold font-epilogue ">Login or Sign up to book</p>
+                    <p class="text-sm">We need your information, so please log in or register to continue booking</p>
+                    <div class="flex items-center gap-5">
+                        <button class="w-full h-12 py-3.5 bg-mint-green rounded-lg leading-none">
+                            Login
+                        </button>
+                        <span class="text-xl ">Or</span>
+                        <button class="w-full h-12 py-3.5 bg-mint-green rounded-lg leading-none">
+                            Sign up
+                        </button>
+                    </div>
+                    <p class="text-sm">We’ll call or text you to confirm your number. Standard message and data rates apply. Privacy Policy</p>
+                </div>
+            @endguest
+        </div>
+    </x-modal>
 </x-app-layout>
+
+<script>
+    const handleRating = (e, id) => {
+        const groupActive = document.querySelector('.group-rating.active')
+        const inputElement = document.getElementById(`rating${id}`)
+        e.target.classList.add('active')
+        groupActive.classList.remove('active')
+        inputElement.checked = true
+    }
+
+    const handleBooking = () => {
+        const formBooking = document.getElementById("formBooking")
+        const dateCheckin = document.getElementById('modal-checkin-input').value
+        const dateCheckout = document.getElementById('modal-checkout-input').value
+        const messageError = document.getElementById('message-error')
+        const checkInDate = new Date(dateCheckin);
+        const checkOutDate = new Date(dateCheckout);
+
+        if (checkOutDate > checkInDate) {
+            // const dayDiff = Math.ceil((checkOutDate-checkInDate) / 86400000);
+            // console.log({checkOutDate})
+            const inputCheckin = document.querySelector('input[name="checkin"]')
+            const inputCheckout = document.querySelector('input[name="checkout"]')
+            inputCheckin.value = dateCheckin
+            inputCheckout.value = dateCheckout
+            formBooking.submit()
+        } else {
+            console.log('Ngày không hợp lệ');
+            messageError.classList.remove('hidden')
+        }
+
+    }
+
+    const handleSetBookingInfo = (roomId, hotelId) => {
+        const inputRoom = document.querySelector('input[name="typeRoomId"]')
+        const inputHotel = document.getElementById('bookingHotelId')
+        inputRoom.value = roomId
+        inputHotel.value = hotelId
+    }
+</script>

@@ -13,12 +13,12 @@ abstract class BaseRepository implements BaseRepositoryInterface {
 
     public function all(int $itemPerPage, $column = ['*'])
     {
-        return $this->model->where('delete_flag', 0)->orderBy('updated_at', 'desc')->paginate($itemPerPage);
+        return $this->model->where('deleteFlag', 0)->orderBy('updated_at', 'desc')->paginate($itemPerPage);
     }
 
     public function find($id, $column = ['*'])
     {
-        return $this->model->where([['delete_flag', 0],['id', $id]])->first();
+        return $this->model::select($column)->where([['deleteFlag', 0],['id', $id]])->first();
     }
 
     public function create(array $data)
@@ -34,7 +34,7 @@ abstract class BaseRepository implements BaseRepositoryInterface {
     public function delete($id)
     {
         $obj = $this->find($id);
-        $obj->delete_flag = true;
+        $obj->deleteFlag = true;
         return $obj->save();
     }
 }

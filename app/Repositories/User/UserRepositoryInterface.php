@@ -1,7 +1,10 @@
 <?php
 
-namespace App\Repositories;
+namespace App\Repositories\User;
 
-interface  UserRepositoryInterface extends BaseRepositoryInterface {
-    
+use App\Repositories\BaseRepositoryInterface;
+
+interface UserRepositoryInterface extends BaseRepositoryInterface
+{
+    public function searchUsersByAttribute(int $itemPerPage, string $searchValue, $attribute = "fullName", $column=['*']);
 }

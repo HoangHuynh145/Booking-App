@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\OrdersController;
+use App\Http\Controllers\Admin\WishlistsController;
 use App\Http\Controllers\Auth\AuthenticationController;
 use App\Http\Controllers\Auth\RegisterUserController;
+use App\Http\Controllers\Client\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,4 +27,7 @@ Route::group(['prefix' => 'auth', 'middleware' => ['guest']], function () {
 
 Route::group(['prefix' => 'auth', 'middleware' => ['auth']], function () {
     Route::get('logout', [AuthenticationController::class, 'destroy'])->name('logout');
+    Route::resource('user', ProfileController::class);
+    Route::get('orders', [ProfileController::class, 'userOrders'])->name('profile.orders');
+    Route::resource('wishlist', WishlistsController::class);
 });

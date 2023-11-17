@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\Users;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -26,15 +27,16 @@ class RegisterUserController extends Controller
             'password' => ['required', 'confirmed']
         ]);
 
-        // $user = Users::create([
-        //     'fullName' => $request->fullName,
-        //     'phone' => $request->phone,
-        //     'email' => $request->email,
-        //     'password' => Hash::make($request->password)
-        // ]);
+        $user = Users::create([
+            'fullName' => $request->fullName,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
 
-        // Auth::login($user);
-
-        // return redirect('/');
+        event(new Registered($user));
+        $request->session()->put('user', $user);
+        Auth::login($user);
+        return redirect()->intended('/');
     }
 }
